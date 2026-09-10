@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'Personal_Cable_TV_Docker_v0.4.6.zip'
+      - 'Personal_Cable_TV_Docker_v0.4.7.zip'
       - '.github/workflows/docker-publish.yml'
   workflow_dispatch:
 
@@ -25,7 +25,7 @@ jobs:
         run: |
           rm -rf build
           mkdir -p build
-          unzip -q Personal_Cable_TV_Docker_v0.4.6.zip -d build
+          unzip -q Personal_Cable_TV_Docker_v0.4.7.zip -d build
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -40,9 +40,9 @@ jobs:
       - name: Build and publish Personal Cable TV
         uses: docker/build-push-action@v6
         with:
-          context: ./build/Personal_Cable_TV_Docker_v0.4.6
-          file: ./build/Personal_Cable_TV_Docker_v0.4.6/Dockerfile
+          context: ./build/Personal_Cable_TV_Docker_v0.4.7
+          file: ./build/Personal_Cable_TV_Docker_v0.4.7/Dockerfile
           push: true
           tags: |
-            ghcr.io/akaidragon123k/personal-cable-tv:0.4.6
+            ghcr.io/akaidragon123k/personal-cable-tv:0.4.7
             ghcr.io/akaidragon123k/personal-cable-tv:latest
