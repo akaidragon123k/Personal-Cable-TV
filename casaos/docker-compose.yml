@@ -2,7 +2,7 @@ name: personal-cable-tv
 
 services:
   personal-cable-tv:
-    image: ghcr.io/akaidragon123k/personal-cable-tv:0.4.6
+    image: ghcr.io/akaidragon123k/personal-cable-tv:0.4.7
     restart: unless-stopped
     read_only: true
     ports:
@@ -52,9 +52,9 @@ x-casaos:
   category: Media
   architectures:
     - amd64
-  version: "0.4.6"
+  version: "0.4.7"
   update_at: "2026-09-10"
   release_notes:
-    en_US: Initial public CasaOS-ready release using the prebuilt GitHub Container Registry image.
+    en_US: Removes obsolete Scan Test Media and Legacy Metadata Import controls and improves Jellyfin M3U/XMLTV setup instructions in Help & Support.
   repo: https://github.com/akaidragon123k/Personal-Cable-TV
   support: https://github.com/akaidragon123k/Personal-Cable-TV/issues
