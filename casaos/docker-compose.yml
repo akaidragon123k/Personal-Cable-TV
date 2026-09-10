@@ -1,0 +1,56 @@
+name: personal-cable-tv
+
+services:
+  personal-cable-tv:
+    image: ghcr.io/akaidragon123k/personal-cable-tv:0.4.6
+    restart: unless-stopped
+    read_only: true
+    ports:
+      - target: 8484
+        published: "8484"
+        protocol: tcp
+    environment:
+      TZ: UTC
+      PORT: "8484"
+      DATA_DIR: /app/data
+      MEDIA_ROOT: /media
+      STREAM_MODE: copy
+      ALLOW_WRITABLE_MEDIA: "0"
+      PUBLIC_BASE_URL: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/personal-cable-tv/data
+        target: /app/data
+    tmpfs:
+      - /tmp:size=256m,noexec,nosuid,nodev
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    stop_grace_period: 10s
+
+x-casaos:
+  id: com.akaidragon123k.personal-cable-tv
+  main: personal-cable-tv
+  index: /
+  port_map: "8484"
+  scheme: http
+  icon: https://raw.githubusercontent.com/akaidragon123k/Personal-Cable-TV/main/assets/icon.svg
+  title:
+    en_US: Personal Cable TV
+  tagline:
+    en_US: Turn your Jellyfin library into scheduled cable-style Live TV channels.
+  description:
+    en_US: Personal Cable TV creates scheduled linear channels from your Jellyfin library, generates M3U and XMLTV feeds, and provides a web dashboard for channel management and programming.
+  author: akaidragon123k
+  developer: akaidragon123k
+  category: Media
+  architectures:
+    - amd64
+  version: "0.4.6"
+  update_at: "2026-09-10"
+  release_notes:
+    en_US: Initial public CasaOS-ready release using the prebuilt GitHub Container Registry image.
+  repo: https://github.com/akaidragon123k/Personal-Cable-TV
+  support: https://github.com/akaidragon123k/Personal-Cable-TV/issues
