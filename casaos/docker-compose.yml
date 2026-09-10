@@ -21,6 +21,10 @@ services:
       - type: bind
         source: /DATA/AppData/personal-cable-tv/data
         target: /app/data
+      - type: bind
+        source: /DATA/Media/PersonalCableTV
+        target: /media
+        read_only: true
     tmpfs:
       - /tmp:size=256m,noexec,nosuid,nodev
     cap_drop:
