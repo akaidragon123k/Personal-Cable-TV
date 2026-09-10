@@ -1,0 +1,48 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Personal_Cable_TV_Docker_v0.4.6.zip'
+      - '.github/workflows/docker-publish.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Extract release package
+        run: |
+          rm -rf build
+          mkdir -p build
+          unzip -q Personal_Cable_TV_Docker_v0.4.6.zip -d build
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish Personal Cable TV
+        uses: docker/build-push-action@v6
+        with:
+          context: ./build/Personal_Cable_TV_Docker_v0.4.6
+          file: ./build/Personal_Cable_TV_Docker_v0.4.6/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/akaidragon123k/personal-cable-tv:0.4.6
+            ghcr.io/akaidragon123k/personal-cable-tv:latest
