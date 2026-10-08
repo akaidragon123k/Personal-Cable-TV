@@ -3,6 +3,7 @@ name: personal-cable-tv
 services:
   personal-cable-tv:
     image: ghcr.io/akaidragon123k/personal-cable-tv:0.4.7
+    container_name: personal-cable-tv
     restart: unless-stopped
     read_only: true
     ports:
@@ -17,6 +18,8 @@ services:
       STREAM_MODE: copy
       ALLOW_WRITABLE_MEDIA: "0"
       PUBLIC_BASE_URL: ""
+      PCTV_UPDATE_MANIFEST_URL: "https://raw.githubusercontent.com/akaidragon123k/Personal-Cable-TV/main/updates/manifest.json"
+      PCTV_UPDATE_SERVICE_URL: "http://pctv-updater:8787"
     volumes:
       - type: bind
         source: /DATA/AppData/personal-cable-tv/data
@@ -33,6 +36,31 @@ services:
       - no-new-privileges:true
     pids_limit: 256
     stop_grace_period: 10s
+    depends_on:
+      pctv-updater:
+        condition: service_healthy
+
+  pctv-updater:
+    image: ghcr.io/akaidragon123k/personal-cable-tv-updater:1
+    container_name: personal-cable-tv-updater
+    restart: unless-stopped
+    environment:
+      PCTV_CONTAINER_NAME: personal-cable-tv
+      PCTV_UPDATE_MANIFEST_URL: "https://raw.githubusercontent.com/akaidragon123k/Personal-Cable-TV/main/updates/manifest.json"
+      PCTV_ALLOWED_IMAGE_PREFIX: "ghcr.io/akaidragon123k/personal-cable-tv:"
+      PCTV_HEALTH_URL: "http://personal-cable-tv:8484/health"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8787/health', timeout=3).read()"
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
 
 x-casaos:
   id: com.akaidragon123k.personal-cable-tv
@@ -46,15 +74,15 @@ x-casaos:
   tagline:
     en_US: Turn your Jellyfin library into scheduled cable-style Live TV channels.
   description:
-    en_US: Personal Cable TV creates scheduled linear channels from your Jellyfin library, generates M3U and XMLTV feeds, and provides a web dashboard for channel management and programming.
+    en_US: Personal Cable TV creates scheduled linear channels from your Jellyfin library, generates M3U and XMLTV feeds, and provides a web dashboard with user-confirmed Docker updates.
   author: akaidragon123k
   developer: akaidragon123k
   category: Media
   architectures:
     - amd64
   version: "0.4.7"
-  update_at: "2026-09-10"
+  update_at: "2026-10-08"
   release_notes:
-    en_US: Removes obsolete Scan Test Media and Legacy Metadata Import controls and improves Jellyfin M3U/XMLTV setup instructions in Help & Support.
+    en_US: Adds the Personal Cable TV in-app Docker update foundation with a separate updater sidecar, while keeping updates user-confirmed and media read-only.
   repo: https://github.com/akaidragon123k/Personal-Cable-TV
   support: https://github.com/akaidragon123k/Personal-Cable-TV/issues
