@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "channel": "stable",
+  "releases": [
+    {
+      "version": "0.4.7",
+      "image": "ghcr.io/akaidragon123k/personal-cable-tv:0.4.7",
+      "published": "2026-10-08",
+      "notes": [
+        "Initial Personal Cable TV in-app Docker update foundation.",
+        "Updates are installed only after the user confirms them.",
+        "Application data is preserved and media remains read-only.",
+        "This is the current public stable release."
+      ]
+    }
+  ]
+}
