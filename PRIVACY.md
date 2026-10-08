@@ -1,8 +1,8 @@
-# Privacy Policy — Personal Cable TV Companion
+# Privacy Policy — P.Cable TV Companion (Roku app)
 
 **Effective date:** September 15, 2026
 
-Personal Cable TV Companion is designed to let users view and control their own Personal Cable TV system from a Roku device. The app is intended for personal media libraries that the user already owns or is authorized to access.
+This policy applies specifically to the **P.Cable TV Companion Roku app**. The Roku app is designed to let users view and control their own Personal Cable TV system from a Roku device. The app is intended for personal media libraries that the user already owns or is authorized to access.
 
 ## Information the app uses
 
