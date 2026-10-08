@@ -50,6 +50,8 @@ The Companion repository includes:
 
 This main repository is for the **Personal Cable TV server**. It is no longer the download location for current Jellyfin Companion releases.
 
+> **Legacy release notice:** An older Jellyfin Companion v0.1.0.0 release may still appear in this repository's historical Releases list. It is kept only as release history. New Companion installs and updates should use the dedicated Jellyfin Companion repository above.
+
 ## Roku companion app
 
 A separate **P.Cable TV Companion** Roku app is being prepared for Roku distribution. It requires a Personal Cable TV server and does not include media. Roku users should follow the Roku app's own listing and setup instructions when it becomes publicly available.
