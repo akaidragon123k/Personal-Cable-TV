@@ -4,23 +4,22 @@ Personal Cable TV turns a Jellyfin library into scheduled, linear cable-style Li
 
 Current public version: **v0.4.7**
 
-## Personal Cable TV Jellyfin Companion
+## Optional Jellyfin Companion
 
-The optional **Personal Cable TV Jellyfin Companion v0.1.0.0** adds the custom Personal Cable TV experience directly inside Jellyfin Live TV, including:
+The Jellyfin Companion is now maintained in its own repository so installation and updates are easier to find and manage.
 
-- Custom **On Now** page
-- Custom live TV **Guide**
-- Channel category filters
-- **Earlier / Now / Later** guide controls
-- Desktop playback support
-- LG TV / webOS remote navigation support
-- Cable-style live playback behavior
+If you want the custom Personal Cable TV experience inside Jellyfin — including the custom Guide, On Now experience, LG/webOS channel surfing, and cable-style playback controls — install the Companion from:
 
-**Download:** [PersonalCableTvCompanion_0.1.0.0.zip](https://github.com/akaidragon123k/Personal-Cable-TV/releases/download/companion-v0.1.0.0/PersonalCableTvCompanion_0.1.0.0.zip)
+https://github.com/akaidragon123k/PersonalCableTV-Jellyfin-Companion
 
-**Release page:** [Personal Cable TV Jellyfin Companion v0.1.0.0](https://github.com/akaidragon123k/Personal-Cable-TV/releases/tag/companion-v0.1.0.0)
+The Companion repository includes:
+- Jellyfin repository installation instructions
+- Current Companion release
+- Revision history and changelog
+- Compatibility notes
+- Direct Jellyfin plugin update support
 
-The Companion keeps the existing Jellyfin Live TV backend intact and is designed to work with Personal Cable TV.
+This main repository no longer serves as the Companion download location.
 
 ## What it looks like
 
