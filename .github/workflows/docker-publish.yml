@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image
+name: Build and Publish Docker Images
 
 on:
   push:
@@ -26,6 +26,9 @@ jobs:
           rm -rf build
           mkdir -p build
           unzip -q Personal_Cable_TV_Docker_v0.4.7.zip -d build
+          test -f build/Personal_Cable_TV_Docker_v0.4.7/Dockerfile
+          test -f build/Personal_Cable_TV_Docker_v0.4.7/Dockerfile.updater
+          test -f build/Personal_Cable_TV_Docker_v0.4.7/updater/server.py
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -37,7 +40,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and publish Personal Cable TV
+      - name: Build and publish Personal Cable TV v0.4.7
         uses: docker/build-push-action@v6
         with:
           context: ./build/Personal_Cable_TV_Docker_v0.4.7
@@ -45,4 +48,15 @@ jobs:
           push: true
           tags: |
             ghcr.io/akaidragon123k/personal-cable-tv:0.4.7
+            ghcr.io/akaidragon123k/personal-cable-tv:stable
             ghcr.io/akaidragon123k/personal-cable-tv:latest
+
+      - name: Build and publish Personal Cable TV updater
+        uses: docker/build-push-action@v6
+        with:
+          context: ./build/Personal_Cable_TV_Docker_v0.4.7
+          file: ./build/Personal_Cable_TV_Docker_v0.4.7/Dockerfile.updater
+          push: true
+          tags: |
+            ghcr.io/akaidragon123k/personal-cable-tv-updater:1
+            ghcr.io/akaidragon123k/personal-cable-tv-updater:latest
