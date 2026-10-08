@@ -1,8 +1,8 @@
-# Terms of Use — Personal Cable TV Companion
+# Terms of Use — P.Cable TV Companion (Roku app)
 
 **Effective date:** September 15, 2026
 
-These Terms of Use apply to Personal Cable TV Companion and the related Personal Cable TV software distributed through the Personal Cable TV project.
+These Terms of Use apply specifically to the **P.Cable TV Companion Roku app** and its use with a user-operated Personal Cable TV server. Personal Cable TV is self-hosted and does not provide a catalog of media.
 
 ## Personal-use media
 
