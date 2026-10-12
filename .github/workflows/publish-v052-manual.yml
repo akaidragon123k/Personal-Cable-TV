@@ -1,0 +1,53 @@
+name: Publish Personal Cable TV v0.5.2 (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: pctv-publish-v0.5.2
+  cancel-in-progress: false
+
+jobs:
+  publish-v052:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download and verify exact v0.5.2 release ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            'https://github.com/akaidragon123k/Personal-Cable-TV/releases/download/v0.5.2/Personal_Cable_TV_Docker_v0.5.2_UPDATE_READY.zip' \
+            --output /tmp/pctv-v052.zip
+          echo '5890d7797362bbd6ac07bdef89d7c3ca233bf5f0ea0b7f0b69bf5627f6f055bd  /tmp/pctv-v052.zip' | sha256sum --check
+          mkdir build
+          unzip -q /tmp/pctv-v052.zip -d build
+          test -f build/Personal_Cable_TV_Docker_v0.5.2/Dockerfile
+          test -f build/Personal_Cable_TV_Docker_v0.5.2/app/run.py
+          test -f build/Personal_Cable_TV_Docker_v0.5.2/app/cabletv/web.py
+          test -f build/Personal_Cable_TV_Docker_v0.5.2/requirements.txt
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish only version 0.5.2
+        uses: docker/build-push-action@v6
+        with:
+          context: ./build/Personal_Cable_TV_Docker_v0.5.2
+          file: ./build/Personal_Cable_TV_Docker_v0.5.2/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/akaidragon123k/personal-cable-tv:0.5.2
+          labels: |
+            org.opencontainers.image.source=https://github.com/akaidragon123k/Personal-Cable-TV
+            org.opencontainers.image.version=0.5.2
