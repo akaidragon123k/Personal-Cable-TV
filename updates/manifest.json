@@ -21,6 +21,16 @@
         "Update from older compatible versions using the in-app updater after confirming the update.",
         "Preserve application data and keep source media read-only."
       ]
+    },
+    {
+      "version": "0.5.3",
+      "image": "ghcr.io/akaidragon123k/personal-cable-tv:0.5.3",
+      "published": "2026-10-23",
+      "notes": [
+        "Personal Cable TV v0.5.3 stable Docker release.",
+        "Update through the built-in updater after reviewing and confirming the update.",
+        "Preserve application data and keep source media mounted read-only."
+      ]
     }
   ]
 }
