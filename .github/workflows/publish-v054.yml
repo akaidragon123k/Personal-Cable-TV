@@ -1,0 +1,60 @@
+name: Publish Personal Cable TV v0.5.4
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v054.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: pctv-publish-v0.5.4
+  cancel-in-progress: false
+
+jobs:
+  publish-v054:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download and verify exact published v0.5.4 ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            'https://github.com/akaidragon123k/Personal-Cable-TV/releases/download/v0.5.4/Personal_Cable_TV_Docker_v0.5.4_UPDATE_READY.zip' \
+            --output /tmp/pctv-v054.zip
+          echo 'bc6de2e455f145bc81268b4c88e76286807d34b9ae1e26b6aca1618104fedbf5  /tmp/pctv-v054.zip' | sha256sum --check
+          mkdir -p build
+          unzip -q /tmp/pctv-v054.zip -d build
+          test -f build/Dockerfile
+          test -f build/app/run.py
+          test -f build/app/cabletv/web.py
+          test -f build/requirements.txt
+          grep -Fq '__version__ = "0.5.4"' build/app/cabletv/__init__.py
+          ! find build -type l | grep -q .
+          test "$(find build -maxdepth 1 -type f -name Dockerfile | wc -l)" -eq 1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish only v0.5.4 image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./build
+          file: ./build/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/akaidragon123k/personal-cable-tv:0.5.4
+          labels: |
+            org.opencontainers.image.source=https://github.com/akaidragon123k/Personal-Cable-TV
+            org.opencontainers.image.version=0.5.4
